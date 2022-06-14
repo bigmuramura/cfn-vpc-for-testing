@@ -116,7 +116,6 @@ Resources:
       RouteTableId: !Ref PublicRouteTable1
       DestinationCidrBlock: 0.0.0.0/0
       GatewayId: !Ref InternetGateway
-
   # Create Private RouteTable & Setting Routing
   PrivateRouteTable1:
     Type: AWS::EC2::RouteTable
@@ -136,7 +135,6 @@ Resources:
       DestinationCidrBlock: 0.0.0.0/0
       NatGatewayId: !Ref NatGateway1
     Condition: EnableNatGateway
-
   # Create Isolated RouteTable & Setting Routing
   IsolatedRouteTable1:
     Type: AWS::EC2::RouteTable
@@ -159,7 +157,7 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: !Select [0, !GetAZs ""]
       CidrBlock: 10.0.1.0/24
-      MapPublicIpOnLaunch: false
+      MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-${Environment}-public-subnet1
@@ -178,7 +176,7 @@ Resources:
       VpcId: !Ref VPC
       AvailabilityZone: !Select [1, !GetAZs ""]
       CidrBlock: 10.0.2.0/24
-      MapPublicIpOnLaunch: false
+      MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
           Value: !Sub ${ProjectName}-${Environment}-public-subnet2
@@ -291,7 +289,6 @@ Resources:
       Protocol: -1
       RuleAction: allow
       RuleNumber: 100
-
   # Private NACL
   PrivateNetworkACL1:
     Type: AWS::EC2::NetworkAcl
@@ -318,7 +315,6 @@ Resources:
       Protocol: -1
       RuleAction: allow
       RuleNumber: 100
-
   # Isolated NACL
   IsolatedNetworkACL1:
     Type: AWS::EC2::NetworkAcl
@@ -345,7 +341,6 @@ Resources:
       Protocol: -1
       RuleAction: allow
       RuleNumber: 100
-
   # NetworkACL Association
   PublicNetworkACLAssocation1:
     Type: AWS::EC2::SubnetNetworkAclAssociation
